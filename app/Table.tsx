@@ -24,7 +24,7 @@ export function Table({ marketData }: TableProps) {
 
   return (
     <table className="table-auto">
-      <thead>
+      <thead className="sticky top-0 bg-black">
         <tr>
           <th>Item name</th>
           <th>Route</th>
