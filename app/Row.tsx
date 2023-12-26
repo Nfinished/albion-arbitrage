@@ -4,6 +4,7 @@ import { getItemDescription } from "@/utils/getItemDescription";
 import { getItemName } from "@/utils/getItemName";
 import { Fragment, useCallback } from "react";
 import { differenceInMinutes } from "date-fns";
+import { getItemTier } from "@/utils/getItemTier";
 
 interface RowProps {
   data: TableRow;
@@ -22,7 +23,10 @@ export function Row({ data }: RowProps) {
             width={32}
             height={32}
           />
-          {getItemName(data.itemUniqueName)}
+          {getItemName(data.itemUniqueName)}&nbsp;
+          <span className="text-gray-500">
+            {getItemTier(data.itemUniqueName)}
+          </span>
         </div>
       </td>
       <DataCells data={data} />

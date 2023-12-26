@@ -19,7 +19,7 @@ export function Table({ marketData }: TableProps) {
       .map((entry) => {
         return getTradeInfo(...entry);
       })
-      .sort((a, b) => (a.profit && b.profit ? b.roi - a.roi : 0));
+      .sort((a, b) => (a.spread && b.spread ? b.roi - a.roi : 0));
   }, [marketData]);
 
   return (
