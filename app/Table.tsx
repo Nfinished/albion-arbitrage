@@ -76,7 +76,7 @@ function getTradeInfo(itemUniqueName: ItemUniqueName, data: RawMarketData[]) {
     profitPerHour: travelTime
       ? Math.floor((profit / travelTime) * 60).toLocaleString()
       : "—",
-    roi: (highestBuyPrice.buy_price_max / lowestSellPrice.sell_price_min) * 100,
+    roi: (finalSellPrice / lowestSellPrice.sell_price_min) * 100,
     buy: {
       city: lowestSellPrice.city,
       price: lowestSellPrice.sell_price_min,
