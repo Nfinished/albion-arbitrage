@@ -69,7 +69,11 @@ function DataCells({ data }: RowProps) {
       <td>{data.buy.price.toLocaleString()}</td>
       <td>{data.sell.price.toLocaleString()}</td>
       <td>{data.spread.toLocaleString()}</td>
-      <td>{data.profitPerHour}</td>
+      <td>
+        {data.profitPerHour
+          ? Math.floor(data.profitPerHour).toLocaleString()
+          : "—"}
+      </td>
       <td>{data.roi.toFixed(2)}%</td>
     </Fragment>
   );

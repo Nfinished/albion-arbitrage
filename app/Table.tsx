@@ -64,22 +64,22 @@ function getTradeInfo(itemUniqueName: ItemUniqueName, data: RawMarketData[]) {
     false,
   );
 
-  const finalSellPrice = Math.floor(
-    highestBuyPrice.buy_price_max * (1 - 0.04 - 0.025),
-  );
-  const profit = finalSellPrice - lowestSellPrice.sell_price_min;
+  const marketBuyPrice = Math.ceil(highestBuyPrice.buy_price_max);
+  const marketSellPrice = Math.floor(lowestSellPrice.sell_price_min);
+
+  const finalSellPrice = Math.ceil(marketBuyPrice * (1 - 0.04 - 0.025));
+
+  const spread = finalSellPrice - marketSellPrice;
 
   return {
     itemUniqueName: itemUniqueName,
     travelTime,
-    spread: highestBuyPrice.buy_price_max - lowestSellPrice.sell_price_min,
-    profitPerHour: travelTime
-      ? Math.floor((profit / travelTime) * 60).toLocaleString()
-      : "—",
-    roi: (finalSellPrice / lowestSellPrice.sell_price_min - 1) * 100,
+    spread: highestBuyPrice.buy_price_max - marketSellPrice,
+    profitPerHour: travelTime ? (spread / travelTime) * 60 : 0,
+    roi: (finalSellPrice / marketSellPrice - 1) * 100,
     buy: {
       city: lowestSellPrice.city,
-      price: lowestSellPrice.sell_price_min,
+      price: marketSellPrice,
       age: lowestSellPrice.sell_price_min_date,
     },
     sell: {
