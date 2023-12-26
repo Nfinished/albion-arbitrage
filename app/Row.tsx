@@ -42,13 +42,24 @@ function DataCells({ data }: RowProps) {
       travelTime: number,
     ) => {
       if (from.city === to.city) {
-        return <CityLabel data={from} />;
+        return (
+          <td colSpan={3} className="text-center">
+            <CityLabel data={from} />
+          </td>
+        );
       }
 
       return (
         <Fragment>
-          <CityLabel data={from} /> -({travelTime}m)-{">"}{" "}
-          <CityLabel data={to} />
+          <td className="text-right">
+            <CityLabel data={from} />
+          </td>
+          <td className="text-center">
+            -({travelTime}m)-{">"}
+          </td>
+          <td>
+            <CityLabel data={to} />
+          </td>
         </Fragment>
       );
     },
@@ -65,7 +76,7 @@ function DataCells({ data }: RowProps) {
 
   return (
     <Fragment>
-      <td>{getRouteLabel(data.buy, data.sell, data.travelTime)}</td>
+      {getRouteLabel(data.buy, data.sell, data.travelTime)}
       <td className="text-right">{data.buy.price.toLocaleString()}</td>
       <td className="text-right">{data.sell.price.toLocaleString()}</td>
       <td className="text-right">{data.spread.toLocaleString()}</td>

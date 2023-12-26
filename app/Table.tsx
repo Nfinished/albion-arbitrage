@@ -25,11 +25,11 @@ export function Table({ marketData }: TableProps) {
   }, [marketData]);
 
   return (
-    <table className="table-auto">
+    <table className="table-auto w-full">
       <thead className="sticky top-0 bg-black">
         <tr>
-          <th>Item name</th>
-          <th>Route</th>
+          <th className="text-left">Item name</th>
+          <th colSpan={3}>Route</th>
           <th className="text-right">Buy</th>
           <th className="text-right">Sell</th>
           <th className="text-right">Spread</th>
