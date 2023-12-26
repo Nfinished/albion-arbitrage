@@ -4,7 +4,7 @@ import { type ItemUniqueName } from "@/constants/items";
 import { type RawMarketData, type MarketData } from "@/data/getMarketData";
 // import useQueryParam from "@/hooks/useQueryParam";
 import { getTravelTime } from "@/utils/getTravelTime";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Row } from "./Row";
 
 interface TableProps {
@@ -12,24 +12,36 @@ interface TableProps {
 }
 
 export function Table({ marketData }: TableProps) {
-  // const [cities, setCities] = useQueryParam<number>("city", 1);
+  const [preferSafer, setPreferSafer] = useState(true);
 
   const tableData = useMemo(() => {
     return Array.from(marketData.entries())
       .map((entry) => {
-        return getTradeInfo(...entry);
+        return getTradeInfo(...entry, preferSafer);
       })
       .sort((a, b) =>
         a.spread && b.spread ? b.profitPerHour - a.profitPerHour : 0,
       );
-  }, [marketData]);
+  }, [marketData, preferSafer]);
 
   return (
     <table className="table-auto w-full min-w-[1031px]">
       <thead className="sticky top-0 bg-black">
         <tr>
           <th className="text-left">Item name</th>
-          <th colSpan={3}>Route</th>
+          <th colSpan={3}>
+            Route{" "}
+            <label className="text-xs flex-inline content-center justify-center">
+              (
+              <input
+                className="w-3 h-3 align-text-bottom"
+                type="checkbox"
+                checked={preferSafer}
+                onChange={(e) => setPreferSafer(e.target.checked)}
+              />{" "}
+              prefer safer)
+            </label>
+          </th>
           <th className="text-right">Buy</th>
           <th className="text-right">Sell</th>
           <th className="text-right">Spread</th>
@@ -46,7 +58,11 @@ export function Table({ marketData }: TableProps) {
   );
 }
 
-function getTradeInfo(itemUniqueName: ItemUniqueName, data: RawMarketData[]) {
+function getTradeInfo(
+  itemUniqueName: ItemUniqueName,
+  data: RawMarketData[],
+  preferSafer: boolean,
+) {
   const lowestSellPrice = data
     .filter((p) => p.sell_price_min)
     .sort((a, b) => a.sell_price_min - b.sell_price_min)[0];
@@ -63,7 +79,7 @@ function getTradeInfo(itemUniqueName: ItemUniqueName, data: RawMarketData[]) {
   const travelTime = getTravelTime(
     lowestSellPrice.city,
     highestBuyPrice.city,
-    false,
+    preferSafer,
   );
 
   const marketBuyPrice = Math.ceil(highestBuyPrice.buy_price_max);
