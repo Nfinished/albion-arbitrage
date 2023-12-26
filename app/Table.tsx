@@ -30,7 +30,7 @@ export function Table({ marketData }: TableProps) {
           <th>Route</th>
           <th>Buy for</th>
           <th>Sell for</th>
-          <th>Profit</th>
+          <th>Spread</th>
           <th>Profit / hr</th>
           <th>ROI</th>
         </tr>
