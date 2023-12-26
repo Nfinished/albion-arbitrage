@@ -1,3 +1,38 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": ["next/core-web-vitals", "plugin:prettier/recommended"],
+  "plugins": ["react", "@typescript-eslint", "unused-imports"],
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx", ".mts"]
+    },
+    "import/resolver": {
+      "typescript": {
+        "project": ["**/tsconfig.json", "**/tsconfig.*.json"]
+      }
+    }
+  },
+  "rules": {
+    "react/jsx-boolean-value": ["error", "always"],
+    "react/self-closing-comp": ["error", { "component": true, "html": true }],
+    "react/jsx-sort-props": [
+      "error",
+      {
+        "callbacksLast": true,
+        "reservedFirst": true,
+        "noSortAlphabetically": true,
+        "ignoreCase": true
+      }
+    ],
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      { "prefer": "type-imports", "fixStyle": "inline-type-imports" }
+    ],
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+		"unused-imports/no-unused-imports": "error",
+		"unused-imports/no-unused-vars": [
+			"warn",
+			{ "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+		]
+  }
 }
