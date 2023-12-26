@@ -2,7 +2,7 @@ import Image from "next/image";
 import { type TableRow } from "./Table";
 import { getItemDescription } from "@/utils/getItemDescription";
 import { getItemName } from "@/utils/getItemName";
-import { Fragment, useCallback, useMemo } from "react";
+import { Fragment, useCallback } from "react";
 import { differenceInMinutes, formatDistanceToNowStrict } from "date-fns";
 import { getItemTier } from "@/utils/getItemTier";
 
@@ -91,15 +91,9 @@ function DataCells({ data }: RowProps) {
 }
 
 function CityLabel({ data }: { data: Exclude<TableRow["buy"], undefined> }) {
-  const staleness = useMemo(
-    () => differenceInMinutes(new Date(), new Date(data.age)),
-    [data.age],
-  );
+  const staleness = differenceInMinutes(new Date(), new Date(data.age));
 
-  const title = useMemo(
-    () => `${formatDistanceToNowStrict(new Date(data.age))} ago`,
-    [data.age],
-  );
+  const title = `${formatDistanceToNowStrict(new Date(data.age))} ago`;
 
   return (
     <span
