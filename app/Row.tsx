@@ -12,9 +12,9 @@ interface RowProps {
 
 export function Row({ data }: RowProps) {
   return (
-    <tr>
+    <tr className="hover:bg-gray-900">
       <td>
-        <div className="flex content-center">
+        <div className="flex items-center">
           <Image
             alt={`${getItemName(data.itemUniqueName)}: ${getItemDescription(
               data.itemUniqueName,
