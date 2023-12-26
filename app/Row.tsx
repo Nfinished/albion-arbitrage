@@ -59,8 +59,6 @@ function DataCells({ data }: RowProps) {
     );
   }
 
-  const roi = (data.profit / data.buy.price) * 100;
-
   return (
     <Fragment>
       <td>{getRouteLabel(data.buy, data.sell, data.travelTime)}</td>
@@ -68,7 +66,7 @@ function DataCells({ data }: RowProps) {
       <td>{data.sell.price.toLocaleString()}</td>
       <td>{data.profit.toLocaleString()}</td>
       <td>{data.profitPerHour}</td>
-      <td>{roi.toFixed(2)}%</td>
+      <td>{data.roi.toFixed(2)}%</td>
     </Fragment>
   );
 }
