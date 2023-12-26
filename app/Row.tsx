@@ -101,7 +101,7 @@ function CityLabel({ data }: { data: Exclude<TableRow["buy"], undefined> }) {
       className={`${
         staleness > 90
           ? "text-red-500"
-          : staleness > 45
+          : staleness > 30
             ? "text-yellow-500"
             : undefined
       }`}
