@@ -72,7 +72,7 @@ function getTradeInfo(itemUniqueName: ItemUniqueName, data: RawMarketData[]) {
   return {
     itemUniqueName: itemUniqueName,
     travelTime,
-    profit: highestBuyPrice.buy_price_max - lowestSellPrice.sell_price_min,
+    spread: highestBuyPrice.buy_price_max - lowestSellPrice.sell_price_min,
     profitPerHour: travelTime
       ? Math.floor((profit / travelTime) * 60).toLocaleString()
       : "—",

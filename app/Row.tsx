@@ -3,7 +3,7 @@ import { type TableRow } from "./Table";
 import { getItemDescription } from "@/utils/getItemDescription";
 import { getItemName } from "@/utils/getItemName";
 import { Fragment, useCallback } from "react";
-import { differenceInHours } from "date-fns";
+import { differenceInMinutes } from "date-fns";
 
 interface RowProps {
   data: TableRow;
@@ -64,7 +64,7 @@ function DataCells({ data }: RowProps) {
       <td>{getRouteLabel(data.buy, data.sell, data.travelTime)}</td>
       <td>{data.buy.price.toLocaleString()}</td>
       <td>{data.sell.price.toLocaleString()}</td>
-      <td>{data.profit.toLocaleString()}</td>
+      <td>{data.spread.toLocaleString()}</td>
       <td>{data.profitPerHour}</td>
       <td>{data.roi.toFixed(2)}%</td>
     </Fragment>
@@ -72,14 +72,14 @@ function DataCells({ data }: RowProps) {
 }
 
 function CityLabel({ data }: { data: Exclude<TableRow["buy"], undefined> }) {
-  const staleness = differenceInHours(new Date(), new Date(data.age));
+  const staleness = differenceInMinutes(new Date(), new Date(data.age));
 
   return (
     <span
       className={`${
-        staleness > 6
+        staleness > 90
           ? "text-red-500"
-          : staleness > 2
+          : staleness > 45
             ? "text-yellow-500"
             : undefined
       }`}
