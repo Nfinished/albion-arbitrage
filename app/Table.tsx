@@ -19,7 +19,9 @@ export function Table({ marketData }: TableProps) {
       .map((entry) => {
         return getTradeInfo(...entry);
       })
-      .sort((a, b) => (a.spread && b.spread ? b.roi - a.roi : 0));
+      .sort((a, b) =>
+        a.spread && b.spread ? b.profitPerHour - a.profitPerHour : 0,
+      );
   }, [marketData]);
 
   return (
@@ -28,11 +30,11 @@ export function Table({ marketData }: TableProps) {
         <tr>
           <th>Item name</th>
           <th>Route</th>
-          <th>Buy for</th>
-          <th>Sell for</th>
-          <th>Spread</th>
-          <th>Profit / hr</th>
-          <th>ROI</th>
+          <th className="text-right">Buy</th>
+          <th className="text-right">Sell</th>
+          <th className="text-right">Spread</th>
+          <th className="text-right">$/hr</th>
+          <th className="text-right">ROI</th>
         </tr>
       </thead>
       <tbody>

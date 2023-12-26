@@ -66,15 +66,15 @@ function DataCells({ data }: RowProps) {
   return (
     <Fragment>
       <td>{getRouteLabel(data.buy, data.sell, data.travelTime)}</td>
-      <td>{data.buy.price.toLocaleString()}</td>
-      <td>{data.sell.price.toLocaleString()}</td>
-      <td>{data.spread.toLocaleString()}</td>
-      <td>
+      <td className="text-right">{data.buy.price.toLocaleString()}</td>
+      <td className="text-right">{data.sell.price.toLocaleString()}</td>
+      <td className="text-right">{data.spread.toLocaleString()}</td>
+      <td className="text-right">
         {data.profitPerHour
           ? Math.floor(data.profitPerHour).toLocaleString()
           : "—"}
       </td>
-      <td>{data.roi.toFixed(2)}%</td>
+      <td className="text-right">{data.roi.toFixed(2)}%</td>
     </Fragment>
   );
 }
