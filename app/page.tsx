@@ -7,6 +7,8 @@ export default async function Home() {
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
+      Buy from sell orders, sell to buy orders. Tax is considered, but not
+      volume.
       <Table marketData={marketData} />
     </Suspense>
   );
