@@ -55,7 +55,7 @@ function DataCells({ data }: RowProps) {
             <CityLabel data={from} />
           </td>
           <td className="text-center">
-            -({travelTime}m)-{">"}
+            —({travelTime}m)—{">"}
           </td>
           <td>
             <CityLabel data={to} />
