@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="md:container">{children}</body>
+      <body className="container">{children}</body>
       <Analytics />
     </html>
   );

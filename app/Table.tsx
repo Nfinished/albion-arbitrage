@@ -25,7 +25,7 @@ export function Table({ marketData }: TableProps) {
   }, [marketData]);
 
   return (
-    <table className="table-auto w-full">
+    <table className="table-auto w-full min-w-[1031px]">
       <thead className="sticky top-0 bg-black">
         <tr>
           <th className="text-left">Item name</th>
