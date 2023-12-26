@@ -2,7 +2,6 @@
 
 import { type ItemUniqueName } from "@/constants/items";
 import { type RawMarketData, type MarketData } from "@/data/getMarketData";
-// import useQueryParam from "@/hooks/useQueryParam";
 import { getTravelTime } from "@/utils/getTravelTime";
 import { useMemo, useState } from "react";
 import { Row } from "./Row";
