@@ -67,13 +67,7 @@ function DataCells({ data }: RowProps) {
   );
 
   if (!data.buy?.price || !data.sell?.price) {
-    return (
-      <>
-        <td colSpan={9} className="text-center">
-          No data
-        </td>
-      </>
-    );
+    return <td colSpan={9} />;
   }
 
   return (
