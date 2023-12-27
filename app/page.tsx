@@ -10,6 +10,9 @@ export default async function Home() {
       <div className="mb-4 w-full">
         Buy from sell orders, sell to buy orders. Tax is included in the sale
         price.
+        <br />
+        <span className="text-yellow-500">Yellow</span> cities are 30 minutes
+        stale. <span className="text-red-500">Red</span> cities are {">"}90.
         <div className="hidden md:block">
           Prices out of date? Help us out by contributing to the{" "}
           <a
