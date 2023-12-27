@@ -29,7 +29,7 @@ export async function getMarketData() {
 
 async function getMarketDataImpl(itemList: ItemUniqueName[]) {
   const response = await fetch(makeUrl(itemList), {
-    next: { revalidate: 300 },
+    next: { revalidate: 30 },
   });
 
   const data: RawMarketData[] = await response.json();
