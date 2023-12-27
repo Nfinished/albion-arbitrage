@@ -1,12 +1,17 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 import { Analytics } from "@vercel/analytics/react";
-import Head from "next/head";
 
 export const metadata: Metadata = {
   title: "Albion Arbitrage",
   description: "Arbitrage table for bulk goods in Albion Online",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({
@@ -16,9 +21,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
       <body className="container">{children}</body>
       <Analytics />
     </html>
