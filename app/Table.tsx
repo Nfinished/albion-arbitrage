@@ -39,6 +39,9 @@ export function Table({ marketData }: TableProps) {
         });
       })
       .sort((a, b) => {
+        return Number(!a.spread) - Number(!b.spread);
+      })
+      .sort((a, b) => {
         const nameCompare = a.itemUniqueName.localeCompare(b.itemUniqueName);
         const aSpreadExists = typeof a.spread === "number";
         const bSpreadExists = typeof b.spread === "number";
@@ -48,9 +51,6 @@ export function Table({ marketData }: TableProps) {
         }
 
         return nameCompare;
-      })
-      .sort((a, b) => {
-        return Number(!a.spread) - Number(!b.spread);
       });
   }, [marketData, preferSafer, premiumAccount, selectedCities]);
 
