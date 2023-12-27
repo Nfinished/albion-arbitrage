@@ -7,8 +7,8 @@ export default async function Home() {
 
   return (
     <Fragment>
-      Buy from sell orders, sell to buy orders. Tax is considered, but not
-      volume.
+      Buy from sell orders, sell to buy orders. Tax is included in the sale
+      price.
       <Table marketData={marketData} />
     </Fragment>
   );
