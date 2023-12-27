@@ -5,7 +5,7 @@ import { getItemName } from "@/utils/getItemName";
 import { Fragment, useCallback } from "react";
 import { differenceInMinutes, formatDistanceToNowStrict } from "date-fns";
 import { getItemTier } from "@/utils/getItemTier";
-
+import clsx from "clsx";
 interface RowProps {
   data: TableRow;
 }
@@ -94,13 +94,10 @@ function CityLabel({ data }: { data: Exclude<TableRow["buy"], undefined> }) {
   return (
     <span
       title={title}
-      className={`${
-        staleness > 90
-          ? "text-red-500"
-          : staleness > 30
-            ? "text-yellow-500"
-            : undefined
-      }`}
+      className={clsx(
+        staleness >= 90 && "text-red-500",
+        staleness >= 30 && staleness < 90 && "text-yellow-500",
+      )}
     >
       {data.city}
     </span>

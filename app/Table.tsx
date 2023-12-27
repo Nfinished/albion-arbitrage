@@ -3,21 +3,40 @@
 import { type ItemUniqueName } from "@/constants/items";
 import { type RawMarketData, type MarketData } from "@/data/getMarketData";
 import { getTravelTime } from "@/utils/getTravelTime";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState, useTransition } from "react";
 import { Row } from "./Row";
+import { type City, cities, cityColors } from "@/constants/cities";
+import { toggleSetImmutable } from "@/utils/set";
 
 interface TableProps {
   marketData: MarketData;
 }
 
 export function Table({ marketData }: TableProps) {
+  const [_, startTransition] = useTransition();
   const [preferSafer, setPreferSafer] = useState(true);
   const [premiumAccount, setPremiumAccount] = useState(true);
+
+  const [selectedCities, setSelectedCities] = useState<Set<City>>(
+    new Set(cities),
+  );
+
+  const handleUpdateSelectedCities = useCallback((city: City) => {
+    startTransition(() => {
+      setSelectedCities((prev) => {
+        return toggleSetImmutable(prev, city);
+      });
+    });
+  }, []);
 
   const tableData = useMemo(() => {
     return Array.from(marketData.entries())
       .map((entry) => {
-        return getTradeInfo(...entry, preferSafer, premiumAccount);
+        return getTradeInfo(...entry, {
+          preferSafer,
+          premiumAccount,
+          cities: selectedCities,
+        });
       })
       .sort((a, b) => {
         const nameCompare = a.itemUniqueName.localeCompare(b.itemUniqueName);
@@ -40,7 +59,7 @@ export function Table({ marketData }: TableProps) {
 
         return nameCompare;
       });
-  }, [marketData, preferSafer, premiumAccount]);
+  }, [marketData, preferSafer, premiumAccount, selectedCities]);
 
   return (
     <table className="table-auto w-full min-w-[1031px]">
@@ -48,17 +67,45 @@ export function Table({ marketData }: TableProps) {
         <tr>
           <th className="text-left">Item name</th>
           <th colSpan={3}>
-            Route{" "}
-            <label className="text-xs flex-inline justify-center">
-              (
-              <input
-                className="w-3 h-3 align-text-bottom"
-                type="checkbox"
-                checked={preferSafer}
-                onChange={(e) => setPreferSafer(e.target.checked)}
-              />{" "}
-              prefer safer)
-            </label>
+            <div className="mb-1">
+              Route{" "}
+              <label className="text-xs flex-inline justify-center">
+                (
+                <input
+                  className="w-3 h-3 align-text-bottom"
+                  type="checkbox"
+                  checked={preferSafer}
+                  onChange={(e) => setPreferSafer(e.target.checked)}
+                />{" "}
+                prefer safer)
+              </label>
+            </div>
+            <div className="flex gap-1 justify-around mb-2">
+              {Array.from(cities).map((city) => (
+                <label
+                  key={city}
+                  style={
+                    selectedCities.has(city)
+                      ? {
+                          color: cityColors[city],
+                          borderColor: cityColors[city],
+                        }
+                      : { opacity: 0.5 }
+                  }
+                  className={
+                    "text-xs border-2 px-1 py-0.5 rounded flex items-center gap-0.5 select-none cursor-pointer"
+                  }
+                >
+                  <input
+                    type="checkbox"
+                    checked={selectedCities.has(city)}
+                    className="appearance-none"
+                    onChange={() => handleUpdateSelectedCities(city)}
+                  />
+                  {city.slice(0, 4)}
+                </label>
+              ))}
+            </div>
           </th>
           <th className="text-right">Buy</th>
           <th className="text-right">
@@ -88,17 +135,22 @@ export function Table({ marketData }: TableProps) {
   );
 }
 
+interface TradeInfoOptions {
+  preferSafer: boolean;
+  premiumAccount: boolean;
+  cities: Set<City>;
+}
+
 function getTradeInfo(
   itemUniqueName: ItemUniqueName,
   data: RawMarketData[],
-  preferSafer: boolean,
-  premiumAccount: boolean,
+  { preferSafer, premiumAccount, cities }: TradeInfoOptions,
 ) {
   const lowestSellPrice = data
-    .filter((p) => p.sell_price_min)
+    .filter((p) => p.sell_price_min && cities.has(p.city))
     .sort((a, b) => a.sell_price_min - b.sell_price_min)[0];
   const highestBuyPrice = data
-    .filter((p) => p.buy_price_max)
+    .filter((p) => p.buy_price_max && cities.has(p.city))
     .sort((a, b) => b.buy_price_max - a.buy_price_max)[0];
 
   if (!lowestSellPrice || !highestBuyPrice) {

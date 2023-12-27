@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-
+import { cityColors } from "./constants/cities";
 const config: Config = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -11,6 +11,9 @@ const config: Config = {
       center: true,
     },
     extend: {
+      colors: {
+        ...cityColors,
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
