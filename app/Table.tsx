@@ -12,14 +12,15 @@ interface TableProps {
 
 export function Table({ marketData }: TableProps) {
   const [preferSafer, setPreferSafer] = useState(true);
+  const [premiumAccount, setPremiumAccount] = useState(true);
 
   const tableData = useMemo(() => {
     return Array.from(marketData.entries())
       .map((entry) => {
-        return getTradeInfo(...entry, preferSafer);
+        return getTradeInfo(...entry, preferSafer, premiumAccount);
       })
       .sort((a, b) => (a.spread && b.spread ? b.roi - a.roi : 0));
-  }, [marketData, preferSafer]);
+  }, [marketData, preferSafer, premiumAccount]);
 
   return (
     <table className="table-auto w-full min-w-[1031px]">
@@ -28,7 +29,7 @@ export function Table({ marketData }: TableProps) {
           <th className="text-left">Item name</th>
           <th colSpan={3}>
             Route{" "}
-            <label className="text-xs flex-inline content-center justify-center">
+            <label className="text-xs flex-inline justify-center">
               (
               <input
                 className="w-3 h-3 align-text-bottom"
@@ -40,7 +41,19 @@ export function Table({ marketData }: TableProps) {
             </label>
           </th>
           <th className="text-right">Buy</th>
-          <th className="text-right">Sell</th>
+          <th className="text-right">
+            Sell{" "}
+            <label className="text-xs flex-inline justify-center">
+              (
+              <input
+                className="w-3 h-3 align-text-bottom"
+                type="checkbox"
+                checked={premiumAccount}
+                onChange={(e) => setPremiumAccount(e.target.checked)}
+              />{" "}
+              premium)
+            </label>
+          </th>
           <th className="text-right">Spread</th>
           <th className="text-right">$/hr</th>
           <th className="text-right">ROI</th>
@@ -59,6 +72,7 @@ function getTradeInfo(
   itemUniqueName: ItemUniqueName,
   data: RawMarketData[],
   preferSafer: boolean,
+  premiumAccount: boolean,
 ) {
   const lowestSellPrice = data
     .filter((p) => p.sell_price_min)
@@ -82,7 +96,9 @@ function getTradeInfo(
   const marketBuyPrice = Math.ceil(highestBuyPrice.buy_price_max);
   const marketSellPrice = Math.floor(lowestSellPrice.sell_price_min);
 
-  const finalSellPrice = Math.ceil(marketBuyPrice * (1 - 0.04 - 0.025));
+  const finalSellPrice = Math.ceil(
+    marketBuyPrice * (1 - 0.025 - (Number(!premiumAccount) + 1) * 0.04),
+  );
 
   const spread = finalSellPrice - marketSellPrice;
 
