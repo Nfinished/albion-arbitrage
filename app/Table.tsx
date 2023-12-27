@@ -19,7 +19,14 @@ export function Table({ marketData }: TableProps) {
       .map((entry) => {
         return getTradeInfo(...entry, preferSafer, premiumAccount);
       })
-      .sort((a, b) => (a.spread && b.spread ? b.roi - a.roi : 0));
+      .sort((a, b) => {
+        const nameCompare = b.itemUniqueName.localeCompare(a.itemUniqueName);
+        if (a.spread && b.spread) {
+          return b.roi - a.roi || nameCompare;
+        }
+
+        return nameCompare;
+      });
   }, [marketData, preferSafer, premiumAccount]);
 
   return (
