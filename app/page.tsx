@@ -7,7 +7,7 @@ export default async function Home() {
 
   return (
     <Fragment>
-      <div className="mb-4">
+      <div className="mb-4 w-full">
         Buy from sell orders, sell to buy orders. Tax is included in the sale
         price.
         <br />
