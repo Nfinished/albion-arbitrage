@@ -18,9 +18,7 @@ export function Table({ marketData }: TableProps) {
       .map((entry) => {
         return getTradeInfo(...entry, preferSafer);
       })
-      .sort((a, b) =>
-        a.spread && b.spread ? b.profitPerHour - a.profitPerHour : 0,
-      );
+      .sort((a, b) => (a.spread && b.spread ? b.roi - a.roi : 0));
   }, [marketData, preferSafer]);
 
   return (
