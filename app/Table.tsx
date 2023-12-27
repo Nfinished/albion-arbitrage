@@ -21,6 +21,19 @@ export function Table({ marketData }: TableProps) {
       })
       .sort((a, b) => {
         const nameCompare = a.itemUniqueName.localeCompare(b.itemUniqueName);
+        const aSpreadExists = a.spread !== undefined;
+        const bSpreadExists = b.spread !== undefined;
+
+        if (aSpreadExists && !bSpreadExists) {
+          return -1;
+        }
+        if (!aSpreadExists && bSpreadExists) {
+          return 1;
+        }
+        if (!aSpreadExists && !bSpreadExists) {
+          return 0;
+        }
+
         if (a.spread && b.spread) {
           return b.roi - a.roi || nameCompare;
         }
