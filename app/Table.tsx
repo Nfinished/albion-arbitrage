@@ -40,24 +40,17 @@ export function Table({ marketData }: TableProps) {
       })
       .sort((a, b) => {
         const nameCompare = a.itemUniqueName.localeCompare(b.itemUniqueName);
-        const aSpreadExists = a.spread !== undefined;
-        const bSpreadExists = b.spread !== undefined;
+        const aSpreadExists = typeof a.spread === "number";
+        const bSpreadExists = typeof b.spread === "number";
 
-        if (aSpreadExists && !bSpreadExists) {
-          return -1;
-        }
-        if (!aSpreadExists && bSpreadExists) {
-          return 1;
-        }
-        if (!aSpreadExists && !bSpreadExists) {
-          return 0;
-        }
-
-        if (a.spread && b.spread) {
+        if (aSpreadExists && bSpreadExists) {
           return b.roi - a.roi || nameCompare;
         }
 
         return nameCompare;
+      })
+      .sort((a, b) => {
+        return Number(!a.spread) - Number(!b.spread);
       });
   }, [marketData, preferSafer, premiumAccount, selectedCities]);
 
