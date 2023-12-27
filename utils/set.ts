@@ -9,5 +9,5 @@ export function toggleSet<T>(set: Set<T>, item: T) {
 }
 
 export function toggleSetImmutable<T>(set: Set<T>, item: T) {
-  return toggleSet(new Set(set), item);
+  return toggleSet(structuredClone(set), item);
 }
