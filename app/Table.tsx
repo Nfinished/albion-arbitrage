@@ -75,7 +75,9 @@ export function Table({ marketData }: TableProps) {
                   className="w-3 h-3 align-text-bottom"
                   type="checkbox"
                   checked={preferSafer}
-                  onChange={(e) => setPreferSafer(e.target.checked)}
+                  onChange={(e) =>
+                    startTransition(() => setPreferSafer(e.target.checked))
+                  }
                 />{" "}
                 prefer safer)
               </label>
@@ -116,7 +118,9 @@ export function Table({ marketData }: TableProps) {
                 className="w-3 h-3 align-text-bottom"
                 type="checkbox"
                 checked={premiumAccount}
-                onChange={(e) => setPremiumAccount(e.target.checked)}
+                onChange={(e) =>
+                  startTransition(() => setPremiumAccount(e.target.checked))
+                }
               />{" "}
               premium)
             </label>
