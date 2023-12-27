@@ -1,6 +1,6 @@
 import { getMarketData } from "@/data/getMarketData";
 import { Table } from "./Table";
-import { Fragment } from "react";
+import { Fragment, Suspense } from "react";
 
 export default async function Home() {
   const marketData = await getMarketData();
@@ -26,7 +26,9 @@ export default async function Home() {
           . It&apos;s fast and free!
         </div>
       </div>
-      <Table marketData={marketData} />
+      <Suspense>
+        <Table marketData={marketData} />
+      </Suspense>
     </Fragment>
   );
 }
