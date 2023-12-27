@@ -20,7 +20,7 @@ export function Table({ marketData }: TableProps) {
         return getTradeInfo(...entry, preferSafer, premiumAccount);
       })
       .sort((a, b) => {
-        const nameCompare = b.itemUniqueName.localeCompare(a.itemUniqueName);
+        const nameCompare = a.itemUniqueName.localeCompare(b.itemUniqueName);
         if (a.spread && b.spread) {
           return b.roi - a.roi || nameCompare;
         }
