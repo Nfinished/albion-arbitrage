@@ -43,15 +43,20 @@ export function Table({ marketData }: TableProps) {
         });
       })
       .sort((a, b) => {
-        return Number(!a.spread) - Number(!b.spread);
-      })
-      .sort((a, b) => {
         const nameCompare = a.itemUniqueName.localeCompare(b.itemUniqueName);
         const aSpreadExists = typeof a.spread === "number";
         const bSpreadExists = typeof b.spread === "number";
 
         if (aSpreadExists && bSpreadExists) {
           return b.roi - a.roi || nameCompare;
+        }
+
+        if (aSpreadExists && !bSpreadExists) {
+          return -1;
+        }
+
+        if (bSpreadExists && !aSpreadExists) {
+          return 1;
         }
 
         return nameCompare;
