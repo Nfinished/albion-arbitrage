@@ -24,6 +24,10 @@ export function Table({ marketData }: TableProps) {
   const handleUpdateSelectedCities = useCallback((city: City) => {
     startTransition(() => {
       setSelectedCities((prev) => {
+        if (prev.size === 1 && prev.has(city)) {
+          return new Set(cities);
+        }
+
         return toggleSetImmutable(prev, city);
       });
     });
