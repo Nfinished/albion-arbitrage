@@ -20,7 +20,11 @@ export type MarketData = Map<ItemUniqueName, RawMarketData[]>;
 export async function getMarketData() {
   const itemList = Array.from(items);
 
-  const chunks = chunkArray(itemList, 2000);
+  const filteredItemList = itemList.filter(
+    (item) => !/(_ROCK_|_BLOCK_)/.test(item),
+  );
+
+  const chunks = chunkArray(filteredItemList, 2000);
 
   const data = await Promise.all(chunks.map(getMarketDataImpl));
 
