@@ -5,7 +5,7 @@ import { getItemName } from "@/utils/getItemName";
 import { Fragment, useCallback } from "react";
 import { differenceInMinutes, formatDistanceToNowStrict } from "date-fns";
 import { getItemTier } from "@/utils/getItemTier";
-import clsx from "clsx";
+import { clsx } from "clsx/lite";
 interface RowProps {
   data: TableRow;
 }
