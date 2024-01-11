@@ -15,7 +15,7 @@ export const cities = new Set<City>([
   "Thetford",
 ]);
 
-export const cityColors = {
+export const cityColors: Record<City, string> = {
   Caerleon: "rgb(218, 56, 50)",
   Bridgewatch: "rgb(253, 242, 81)",
   Thetford: "rgb(152, 78, 160)",

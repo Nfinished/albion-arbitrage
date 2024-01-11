@@ -20,10 +20,13 @@ export type MarketData = Map<ItemUniqueName, RawMarketData[]>;
 export async function getMarketData() {
   const itemList = Array.from(items);
 
+  // Filter out enchanted rocks and blocks because they're trash
   const filteredItemList = itemList.filter(
     (item) => !/(_ROCK_|_BLOCK_)/.test(item),
   );
 
+  // albion data project API has a 4096 character limit on the URL
+  // so we need to split the request up into chunks
   const chunks = chunkArray(filteredItemList, 2000);
 
   const data = await Promise.all(chunks.map(getMarketDataImpl));
